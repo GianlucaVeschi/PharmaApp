@@ -4,7 +4,8 @@ import androidx.annotation.DrawableRes
 
 data class Page(
     val title: String,
-    val description: String,
+    val description: String?,
     @DrawableRes val image: Int,
-    val toggleButton : Boolean = false
+    val shouldShowInputField : Boolean = false,
+    val shouldShowToggleButton : Boolean = false
 )

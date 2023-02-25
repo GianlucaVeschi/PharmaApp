@@ -26,8 +26,11 @@ import com.google.accompanist.pager.rememberPagerState
 @ExperimentalPagerApi
 @Composable
 fun OnboardingScreen(
-    onGettingStartedClick: () -> Unit
+    onGettingStartedClick: () -> Unit,
+    onSaveButtonClicked: (String?) -> Unit,
+    onAnalyticsToggleClicked: (Boolean) -> Unit
 ) {
+
     val pagerState = rememberPagerState(0)
 
     Column {
@@ -39,7 +42,15 @@ fun OnboardingScreen(
             count = 3
         ) { page ->
             PageUI(
-                page = onboardPages[page]
+                page = onboardPages[page],
+                onSaveNameButtonClicked = {
+                    it?.let { userName ->
+                        onSaveButtonClicked(userName)
+                    }
+                },
+                onAnalyticsToggleClicked = {
+                    onAnalyticsToggleClicked(it)
+                }
             )
         }
 

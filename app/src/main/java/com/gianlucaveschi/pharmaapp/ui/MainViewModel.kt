@@ -21,4 +21,16 @@ class MainViewModel @Inject constructor(
         sharedPref.edit().putBoolean("onboarding_completed", true).apply()
         _onboardingCompleted.value = sharedPref.getBoolean("onboarding_completed", false)
     }
+
+    fun saveUserName(name: String) {
+        sharedPref.edit().putString("user_name", name).apply()
+    }
+
+    fun getUserName(): String {
+        return sharedPref.getString("user_name", "") ?: ""
+    }
+
+    fun onAnalyticsToggleClicked(analyticsValue: Boolean) {
+        sharedPref.edit().putBoolean("analytics", analyticsValue).apply()
+    }
 }

@@ -4,18 +4,20 @@ import com.gianlucaveschi.pharmaapp.R
 
 val onboardPages = listOf(
     Page(
-        "Easy Momo Transfer",
-        "Make a quick transaction with someone besides you by scanning their Easy Momo Code",
-        R.drawable.ic_android_black
+        title = "Welcome in the Pharma App!",
+        description = "This is a the very first intro screen of a very cool app",
+        image = R.drawable.ic_android_black
     ),
     Page(
-        "Easy Select",
-        "Pick a contact directly from your contact list and Momo them in less than no time",
-        R.drawable.ic_android_red
+        title = "What's your name?",
+        description = null,
+        shouldShowInputField = true,
+        image = R.drawable.ic_android_red
     ),
     Page(
-        "Secure",
-        "We will never know your Momo PIN in anyway.The app does not share your data with any third party. No internet connection required",
-        R.drawable.ic_android_blue
+        title = "Are you fine with analytics?",
+        description = "Analytics data will be used only for internal purposes and is safely stored at any time",
+        shouldShowToggleButton = true,
+        image = R.drawable.ic_android_blue
     )
 )
