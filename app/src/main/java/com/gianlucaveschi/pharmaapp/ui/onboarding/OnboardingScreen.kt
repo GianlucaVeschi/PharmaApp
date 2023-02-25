@@ -17,6 +17,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gianlucaveschi.pharmaapp.R
+import com.gianlucaveschi.pharmaapp.ui.MainViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -26,9 +27,7 @@ import com.google.accompanist.pager.rememberPagerState
 @ExperimentalPagerApi
 @Composable
 fun OnboardingScreen(
-    onGettingStartedClick: () -> Unit,
-    onSaveButtonClicked: (String?) -> Unit,
-    onAnalyticsToggleClicked: (Boolean) -> Unit
+    viewModel: MainViewModel
 ) {
 
     val pagerState = rememberPagerState(0)
@@ -45,11 +44,11 @@ fun OnboardingScreen(
                 page = onboardPages[page],
                 onSaveNameButtonClicked = {
                     it?.let { userName ->
-                        onSaveButtonClicked(userName)
+                        viewModel.saveUserName(userName)
                     }
                 },
                 onAnalyticsToggleClicked = {
-                    onAnalyticsToggleClicked(it)
+                    viewModel.onAnalyticsToggleClicked(it)
                 }
             )
         }
@@ -68,7 +67,8 @@ fun OnboardingScreen(
                 shape = RoundedCornerShape(20.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp), onClick = onGettingStartedClick,
+                    .padding(horizontal = 8.dp),
+                onClick = { viewModel.onGettingStartedClick() },
                 colors = ButtonDefaults.outlinedButtonColors(
                     backgroundColor = colorResource(R.color.purple_500),
                     contentColor = Color.White

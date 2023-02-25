@@ -41,17 +41,7 @@ class MainActivity : ComponentActivity() {
 
                     if (!onboardingCompleted.value) {
                         OnboardingScreen(
-                            onGettingStartedClick = {
-                                viewModel.onGettingStartedClick()
-                            },
-                            onSaveButtonClicked = { userName ->
-                                userName?.let {
-                                    viewModel.saveUserName(it)
-                                }
-                            },
-                            onAnalyticsToggleClicked = {
-                                viewModel.onAnalyticsToggleClicked(it)
-                            }
+                            viewModel = viewModel
                         )
                     } else {
                         val userName = viewModel.getUserName()
@@ -83,7 +73,7 @@ fun generateRandomMedication(): Medication {
     val randomFrequency = "Once per day"
     return Medication(
         name = randomName,
-        date = LocalDate.parse("2023-9-12"),
+        date = LocalDate.parse("2023-09-12"),
         dosage = randomDosage,
         frequency = randomFrequency
     )
