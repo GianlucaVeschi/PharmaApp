@@ -15,7 +15,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-
     @Singleton
     @Provides
     fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences {
@@ -29,5 +28,4 @@ object AppModule {
     ): PreferencesRepository = PreferencesRepositoryImpl(
         sharedPreferences
     )
-
 }

@@ -16,7 +16,7 @@ val onboardPages = listOf(
     ),
     Page(
         title = "Are you fine with analytics?",
-        description = "Analytics data will be used only for internal purposes and is safely stored at any time",
+        description = "Analytics data will be used only for internal purposes",
         shouldShowToggleButton = true,
         image = R.drawable.ic_android_blue
     )

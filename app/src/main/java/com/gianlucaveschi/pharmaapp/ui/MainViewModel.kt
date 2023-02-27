@@ -1,16 +1,15 @@
 package com.gianlucaveschi.pharmaapp.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.gianlucaveschi.pharmaapp.domain.repo.PreferencesRepository
 import com.gianlucaveschi.pharmaapp.ui.reminder.Medication
 import com.gianlucaveschi.pharmaapp.ui.reminder.RemindersScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import java.time.LocalDate
 import javax.inject.Inject
 import kotlin.random.Random
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 @HiltViewModel
 class MainViewModel @Inject constructor(

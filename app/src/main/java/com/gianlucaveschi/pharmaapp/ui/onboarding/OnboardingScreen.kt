@@ -61,7 +61,7 @@ fun OnboardingScreen(
             activeColor = colorResource(R.color.purple_500)
         )
 
-        //Show button on last page only
+        // Show button on last page only
         AnimatedVisibility(visible = pagerState.currentPage == 2) {
             OutlinedButton(
                 shape = RoundedCornerShape(20.dp),
