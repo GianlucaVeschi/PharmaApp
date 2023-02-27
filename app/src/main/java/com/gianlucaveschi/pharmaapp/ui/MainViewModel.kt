@@ -1,8 +1,8 @@
 package com.gianlucaveschi.pharmaapp.ui
 
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.gianlucaveschi.pharmaapp.domain.repo.PreferencesRepository
 import com.gianlucaveschi.pharmaapp.ui.reminder.Medication
 import com.gianlucaveschi.pharmaapp.ui.reminder.RemindersScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,37 +14,33 @@ import kotlin.random.Random
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val sharedPref: SharedPreferences
+    private val prefsRepo: PreferencesRepository
 ) : ViewModel() {
 
     private val _onboardingCompleted = MutableStateFlow(
-        sharedPref.getBoolean("onboarding_completed", false)
+        prefsRepo.getOnboardingStatus()
     )
     val onboardingCompleted = _onboardingCompleted.asStateFlow()
 
     private val _remindersScreenState = MutableStateFlow(
         RemindersScreenState(
-            userName = getUserName(),
+            userName = prefsRepo.getUserName(),
             medications = listOf()
         )
     )
     val remindersScreenState = _remindersScreenState.asStateFlow()
 
     fun onGettingStartedClick() {
-        sharedPref.edit().putBoolean("onboarding_completed", true).apply()
-        _onboardingCompleted.value = sharedPref.getBoolean("onboarding_completed", false)
+        prefsRepo.setOnboardingStatus(true)
+        _onboardingCompleted.value = prefsRepo.getOnboardingStatus()
     }
 
     fun saveUserName(name: String) {
-        sharedPref.edit().putString(USER_NAME_KEY, name).apply()
-    }
-
-    private fun getUserName(): String {
-        return sharedPref.getString(USER_NAME_KEY, "") ?: ""
+        prefsRepo.setUserName(name)
     }
 
     fun onAnalyticsToggleClicked(analyticsValue: Boolean) {
-        sharedPref.edit().putBoolean("analytics", analyticsValue).apply()
+        prefsRepo.setAnalyticsStatus(analyticsValue)
     }
 
     fun addMedication() {
@@ -62,7 +58,7 @@ class MainViewModel @Inject constructor(
         )
     }
 
-    fun removeMedication(medication: Medication){
+    fun removeMedication(medication: Medication) {
         val newMedications = _remindersScreenState.value.medications.toMutableList()
         Log.d("yao", "before: $newMedications")
         newMedications.remove(medication)
@@ -70,9 +66,5 @@ class MainViewModel @Inject constructor(
         _remindersScreenState.value = _remindersScreenState.value.copy(
             medications = newMedications
         )
-    }
-
-    private companion object {
-        const val USER_NAME_KEY = "user_name"
     }
 }
