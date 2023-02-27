@@ -11,21 +11,18 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.gianlucaveschi.pharmaapp.ui.reminder.RemindersScreen
-import com.gianlucaveschi.pharmaapp.ui.reminder.Medication
-import com.gianlucaveschi.pharmaapp.ui.reminder.RemindersScreenState
 import com.gianlucaveschi.pharmaapp.ui.onboarding.OnboardingScreen
+import com.gianlucaveschi.pharmaapp.ui.reminder.RemindersScreen
+import com.gianlucaveschi.pharmaapp.ui.reminder.RemindersScreenState
 import com.gianlucaveschi.pharmaapp.ui.theme.PharmaAppTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDate
-import kotlin.random.Random
 
 @OptIn(ExperimentalPagerApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
 
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,44 +34,23 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val onboardingCompleted: State<Boolean> =
-                        viewModel.onboardingCompleted.collectAsState()
+                        mainViewModel.onboardingCompleted.collectAsState()
+
+                    val remindersScreenState: State<RemindersScreenState> =
+                        mainViewModel.remindersScreenState.collectAsState()
 
                     if (!onboardingCompleted.value) {
                         OnboardingScreen(
-                            viewModel = viewModel
+                            viewModel = mainViewModel
                         )
                     } else {
-                        val userName = viewModel.getUserName()
                         RemindersScreen(
-                            state = RemindersScreenState(
-                                userName = userName,
-                                medications = listOf(
-                                    generateRandomMedication(),
-                                    generateRandomMedication(),
-                                    generateRandomMedication()
-                                )
-                            )
+                            state = remindersScreenState.value,
+                            viewModel = mainViewModel
                         )
                     }
                 }
             }
         }
     }
-}
-
-
-// Define a list of possible medication names
-val medicationNames = listOf("Aspirin", "Ibuprofen", "Acetaminophen", "Naproxen", "Amoxicillin")
-
-// Define a function to generate a random medication
-fun generateRandomMedication(): Medication {
-    val randomName = medicationNames[Random.nextInt(medicationNames.size)]
-    val randomDosage = "${Random.nextInt(5, 20)}mg"
-    val randomFrequency = "Once per day"
-    return Medication(
-        name = randomName,
-        date = LocalDate.parse("2023-09-12"),
-        dosage = randomDosage,
-        frequency = randomFrequency
-    )
 }
