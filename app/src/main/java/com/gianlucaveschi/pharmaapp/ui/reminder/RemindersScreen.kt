@@ -72,7 +72,10 @@ fun RemindersScreen(
                         fontSize = 20.sp
                     )
                     LazyColumn {
-                        items(state.medications, key = { it.id }) { medication ->
+                        items(
+                            items = state.medications,
+                            key = { it.id } // Needs to be provided when items in the data set change
+                        ) { medication ->
                             val dismissState = rememberDismissState()
 
                             if (dismissState.isDismissed(DismissDirection.EndToStart)) {
