@@ -48,7 +48,7 @@ class MainViewModel @Inject constructor(
         newMedications.add(
             Medication(
                 name = "MDMA",
-                id = newMedications.size + 1,
+                id = Random.nextInt(100000),
                 date = LocalDate.parse("2023-09-12"),
                 dosage = "${Random.nextInt(10)}g",
                 frequency = "Once per week"
@@ -59,11 +59,9 @@ class MainViewModel @Inject constructor(
         )
     }
 
-    fun removeMedication(medication: Medication) {
+    fun removeMedication(medicationId: Int) {
         val newMedications = _remindersScreenState.value.medications.toMutableList()
-        Log.d("yao", "before: $newMedications")
-        newMedications.remove(medication)
-        Log.d("yao", "after: $newMedications")
+        newMedications.removeIf { it.id == medicationId }
         _remindersScreenState.value = _remindersScreenState.value.copy(
             medications = newMedications
         )
