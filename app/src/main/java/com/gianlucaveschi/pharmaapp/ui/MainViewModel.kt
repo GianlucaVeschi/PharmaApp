@@ -48,6 +48,7 @@ class MainViewModel @Inject constructor(
         newMedications.add(
             Medication(
                 name = "MDMA",
+                id = newMedications.size + 1,
                 date = LocalDate.parse("2023-09-12"),
                 dosage = "${Random.nextInt(10)}g",
                 frequency = "Once per week"
